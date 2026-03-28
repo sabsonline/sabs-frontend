@@ -15,7 +15,8 @@ function AdminAds() {
       return;
     }
     fetchAds();
-  }, [filter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, navigate]);
 
   const fetchAds = async () => {
     setLoading(true);
