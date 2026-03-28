@@ -140,7 +140,7 @@ function Classifieds() {
               >
                 {ad.image ? (
   <img
-    src={`http://localhost:5000${ad.image}`}
+    src={ad.image}
     alt={ad.title}
     className="w-full h-40 object-cover"
   />

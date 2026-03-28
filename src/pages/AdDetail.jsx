@@ -54,7 +54,7 @@ function AdDetail() {
         <div className="bg-white rounded-2xl shadow-md overflow-hidden">
           {ad.image ? (
   <img
-    src={`http://localhost:5000${ad.image}`}
+    src={ad.image}
     alt={ad.title}
     className="w-full h-56 object-cover"
   />
