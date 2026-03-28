@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAdminAds, updateAdStatus, deleteAd } from "../../services/api";
@@ -9,14 +10,13 @@ function AdminAds() {
   const [filter, setFilter] = useState("pending");
   const [actionLoading, setActionLoading] = useState("");
 
-useEffect(() => {
+  useEffect(() => {
     if (!sessionStorage.getItem("adminToken")) {
       navigate("/admin");
       return;
     }
     fetchAds();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter, navigate]);
+  }, [filter]);
 
   const fetchAds = async () => {
     setLoading(true);
@@ -34,9 +34,7 @@ useEffect(() => {
     setActionLoading(id);
     try {
       const data = await updateAdStatus(id, status);
-      if (data.success) {
-        setAds((prev) => prev.filter((ad) => ad._id !== id));
-      }
+      if (data.success) setAds((prev) => prev.filter((ad) => ad._id !== id));
     } catch (err) {
       alert("Failed to update status.");
     } finally {
@@ -49,9 +47,7 @@ useEffect(() => {
     setActionLoading(id);
     try {
       const data = await deleteAd(id);
-      if (data.success) {
-        setAds((prev) => prev.filter((ad) => ad._id !== id));
-      }
+      if (data.success) setAds((prev) => prev.filter((ad) => ad._id !== id));
     } catch (err) {
       alert("Failed to delete ad.");
     } finally {
@@ -67,8 +63,6 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-
-      {/* Admin Navbar */}
       <nav className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <h1 className="text-lg font-bold">🛡️ Admin Panel</h1>
@@ -80,9 +74,7 @@ useEffect(() => {
           <button
             onClick={() => { sessionStorage.removeItem("adminToken"); navigate("/admin"); }}
             className="bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-red-700"
-          >
-            Logout
-          </button>
+          >Logout</button>
         </div>
       </nav>
 
@@ -92,16 +84,11 @@ useEffect(() => {
           <span className="text-gray-400 text-sm">{ads.length} ads found</span>
         </div>
 
-        {/* Filter Tabs */}
         <div className="flex gap-2 mb-6">
           {["pending", "approved", "rejected", ""].map((s) => (
-            <button
-              key={s}
-              onClick={() => setFilter(s)}
+            <button key={s} onClick={() => setFilter(s)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                filter === s
-                  ? "bg-gray-900 text-white"
-                  : "bg-white text-gray-600 hover:bg-gray-50 shadow-sm"
+                filter === s ? "bg-gray-900 text-white" : "bg-white text-gray-600 hover:bg-gray-50 shadow-sm"
               }`}
             >
               {s === "" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}
@@ -109,14 +96,8 @@ useEffect(() => {
           ))}
         </div>
 
-        {/* Loading */}
-        {loading && (
-          <div className="text-center py-16">
-            <p className="text-gray-400">⏳ Loading ads...</p>
-          </div>
-        )}
+        {loading && <div className="text-center py-16"><p className="text-gray-400">⏳ Loading ads...</p></div>}
 
-        {/* No Ads */}
         {!loading && ads.length === 0 && (
           <div className="text-center py-16 bg-white rounded-2xl shadow">
             <p className="text-4xl mb-3">📭</p>
@@ -124,7 +105,6 @@ useEffect(() => {
           </div>
         )}
 
-        {/* Ads Table */}
         {!loading && ads.length > 0 && (
           <div className="bg-white rounded-2xl shadow overflow-hidden">
             <table className="w-full text-sm">
@@ -162,30 +142,18 @@ useEffect(() => {
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
                         {ad.status !== "approved" && (
-                          <button
-                            onClick={() => handleStatus(ad._id, "approved")}
+                          <button onClick={() => handleStatus(ad._id, "approved")}
                             disabled={actionLoading === ad._id}
-                            className="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600 disabled:opacity-50"
-                          >
-                            ✅
-                          </button>
+                            className="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600 disabled:opacity-50">✅</button>
                         )}
                         {ad.status !== "rejected" && (
-                          <button
-                            onClick={() => handleStatus(ad._id, "rejected")}
+                          <button onClick={() => handleStatus(ad._id, "rejected")}
                             disabled={actionLoading === ad._id}
-                            className="bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600 disabled:opacity-50"
-                          >
-                            ❌
-                          </button>
+                            className="bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600 disabled:opacity-50">❌</button>
                         )}
-                        <button
-                          onClick={() => handleDelete(ad._id)}
+                        <button onClick={() => handleDelete(ad._id)}
                           disabled={actionLoading === ad._id}
-                          className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 disabled:opacity-50"
-                        >
-                          🗑️
-                        </button>
+                          className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 disabled:opacity-50">🗑️</button>
                       </div>
                     </td>
                   </tr>
