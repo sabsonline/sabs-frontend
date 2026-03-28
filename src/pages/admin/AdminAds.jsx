@@ -9,7 +9,7 @@ function AdminAds() {
   const [filter, setFilter] = useState("pending");
   const [actionLoading, setActionLoading] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
     if (!sessionStorage.getItem("adminToken")) {
       navigate("/admin");
       return;
